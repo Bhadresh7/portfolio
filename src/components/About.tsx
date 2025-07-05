@@ -100,7 +100,7 @@ const About = () => {
           {values.map((value, index) => (
             <motion.div
               key={value.title}
-              ref={(el) => (cardsRef.current[index] = el)}
+              ref={(el) => (cardsRef.current[index] = el )}
               className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 group"
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ duration: 0.3, ease: "easeOut" }}

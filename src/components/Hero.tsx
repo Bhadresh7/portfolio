@@ -234,7 +234,7 @@ const Hero = () => {
               </motion.button>
 
               <motion.a
-                href="/portfolio/cv.pdf"
+                href="/cv.pdf"
                 download="bhadresh-resume.pdf"
                 className="btn btn-outline btn-lg px-6 sm:px-8 w-full sm:w-auto group"
                 whileHover={{ scale: 1.05 }}

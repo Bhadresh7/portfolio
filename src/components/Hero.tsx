@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import { Typewriter } from "react-simple-typewriter";
 import profileImage from "../assets/profile.png";
 
 const Hero = () => {
@@ -104,25 +105,15 @@ const Hero = () => {
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-green-50 pt-16 lg:pt-0"
     >
       {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-primary/10 rounded-full blur-3xl"
-          animate={{
-            y: [0, -20, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"
+          animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-secondary/10 rounded-full blur-3xl"
-          animate={{
-            y: [0, 20, 0],
-            x: [0, -15, 0],
-          }}
+          className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none"
+          animate={{ y: [0, 20, 0], x: [0, -15, 0] }}
           transition={{
             duration: 8,
             repeat: Infinity,
@@ -131,16 +122,9 @@ const Hero = () => {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-accent/10 rounded-full blur-2xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-accent/10 rounded-full blur-2xl pointer-events-none"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
@@ -149,8 +133,7 @@ const Hero = () => {
           {/* Profile Image */}
           <div className="flex justify-center lg:justify-end order-1 lg:order-2">
             <div ref={imageRef} className="relative">
-              <div className="w-80 h-80 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] relative">
-                {/* Gradient Border */}
+              <div className="w-80 h-80 sm:w-96 sm:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[25rem] xl:h-[25rem] relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full p-1">
                   <div className="w-full h-full bg-white rounded-full p-2">
                     <img
@@ -160,13 +143,11 @@ const Hero = () => {
                     />
                   </div>
                 </div>
-                {/* Floating Elements around image */}
+
+                {/* Floating dots */}
                 <motion.div
-                  className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-primary rounded-full"
-                  animate={{
-                    y: [0, -10, 0],
-                    scale: [1, 1.2, 1],
-                  }}
+                  className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-primary rounded-full pointer-events-none"
+                  animate={{ y: [0, -10, 0], scale: [1, 1.2, 1] }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
@@ -174,11 +155,8 @@ const Hero = () => {
                   }}
                 />
                 <motion.div
-                  className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 w-4 h-4 sm:w-6 sm:h-6 bg-secondary rounded-full"
-                  animate={{
-                    y: [0, 10, 0],
-                    scale: [1, 1.3, 1],
-                  }}
+                  className="absolute -bottom-3 -left-3 sm:-bottom-6 sm:-left-6 w-4 h-4 sm:w-6 sm:h-6 bg-secondary rounded-full pointer-events-none"
+                  animate={{ y: [0, 10, 0], scale: [1, 1.3, 1] }}
                   transition={{
                     duration: 4,
                     repeat: Infinity,
@@ -187,11 +165,8 @@ const Hero = () => {
                   }}
                 />
                 <motion.div
-                  className="absolute top-1/2 -left-4 sm:-left-8 w-3 h-3 sm:w-4 sm:h-4 bg-accent rounded-full"
-                  animate={{
-                    x: [0, -5, 0],
-                    opacity: [0.7, 1, 0.7],
-                  }}
+                  className="absolute top-1/2 -left-4 sm:-left-8 w-3 h-3 sm:w-4 sm:h-4 bg-accent rounded-full pointer-events-none"
+                  animate={{ x: [0, -5, 0], opacity: [0.7, 1, 0.7] }}
                   transition={{
                     duration: 2.5,
                     repeat: Infinity,
@@ -204,20 +179,31 @@ const Hero = () => {
           </div>
 
           {/* Content */}
-          <div className="text-center lg:text-left order-2 lg:order-1 space-y-6 lg:space-y-8 mt-6 lg:mt-8">
+          <div className="text-center lg:text-left order-2 lg:order-1 space-y-6 lg:space-y-8 mt-6 lg:mt[4rem]">
             <div ref={titleRef}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-neutral mb-4 leading-tight">
-                Flutter
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  {" "}
-                  Developer
+              <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold text-neutral mb-4 leading-tight">
+                <span className="typewriter-thin-cursor">
+                  <Typewriter
+                    words={[
+                      "Backend Developer",
+                      "Flutter Developer",
+                      "FullStack Developer",
+                    ]}
+                    loop={false}
+                    cursor
+                    cursorStyle="|"
+                    typeSpeed={100}
+                    deleteSpeed={50}
+                    delaySpeed={1500}
+                  />
                 </span>
               </h1>
+
               <div className="h-1 w-16 sm:w-20 lg:w-24 bg-gradient-to-r from-primary to-secondary mx-auto lg:mx-0 rounded-full"></div>
             </div>
 
             <div ref={subtitleRef} className="space-y-4 lg:space-y-6">
-              <p className="text-lg sm:text-xl lg:text-2xl text-neutral/70 leading-relaxed">
+              <p className="text-lg sm:text-xl lg:text-lg text-neutral/70 leading-relaxed">
                 Crafting beautiful, scalable mobile applications with{" "}
                 <span className="text-primary font-semibold">
                   Clean Architecture
@@ -225,13 +211,14 @@ const Hero = () => {
                 , <span className="text-secondary font-semibold">BLoC</span>,
                 and <span className="text-accent font-semibold">Provider</span>
               </p>
-              <p className="text-base sm:text-lg text-neutral/60 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+
+              <p className="text-sm sm:text-lg text-neutral/60 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 Passionate about creating purpose-driven applications that make
                 a positive impact on environmental sustainability and
                 professional networking.
               </p>
             </div>
-
+            {/* Download CV button */}
             <div
               ref={buttonsRef}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center"
@@ -245,14 +232,17 @@ const Hero = () => {
                 <Mail className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 Get In Touch
               </motion.button>
-              <motion.button
+
+              <motion.a
+                href="/portfolio/cv.pdf"
+                download="bhadresh-resume.pdf"
                 className="btn btn-outline btn-lg px-6 sm:px-8 w-full sm:w-auto group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Download className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 Download CV
-              </motion.button>
+              </motion.a>
             </div>
 
             <div
@@ -260,15 +250,25 @@ const Hero = () => {
               className="flex justify-center lg:justify-start space-x-4 sm:space-x-6"
             >
               {[
-                { icon: Github, href: "#", label: "GitHub" },
-                { icon: Linkedin, href: "#", label: "LinkedIn" },
+                {
+                  icon: Github,
+                  href: "https://github.com/Bhadresh7",
+                  label: "GitHub",
+                },
+                {
+                  icon: Linkedin,
+                  href: "https://www.linkedin.com/in/bhadresh-p-bb426024b/",
+                  label: "LinkedIn",
+                },
                 { icon: Mail, href: "#contact", label: "Email" },
               ].map((social) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-neutral hover:text-primary hover:bg-white shadow-lg transition-all duration-300"
-                  whileHover={{ scale: 1.1, y: -2 }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-neutral hover:text-primary hover:bg-white shadow-lg "
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={social.label}
                 >
@@ -280,18 +280,14 @@ const Hero = () => {
         </div>
 
         <motion.div
-          className="text-center mt-12 lg:mt-16"
+          className="text-center mt-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5 }}
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             <ArrowDown className="w-6 h-6 sm:w-8 sm:h-8 text-neutral/40 mx-auto" />
           </motion.div>

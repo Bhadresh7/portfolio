@@ -1,29 +1,40 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
+import{ useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Github,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
+
+const VITE_EMAIL_ACCESS_KEY = import.meta.env.VITE_EMAIL_ACCESS_KEY;
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
-  const contactRef = useRef(null);
-  const formRef = useRef(null);
+  const contactRef = useRef<HTMLElement | null>(null);
+  const formRef = useRef<HTMLDivElement | null>(null);
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (formRef.current) {
-        gsap.fromTo(formRef.current, 
-          {
-            x: -100,
-            opacity: 0
-          },
+        gsap.fromTo(
+          formRef.current,
+          { x: -100, opacity: 0 },
           {
             x: 0,
             opacity: 1,
@@ -33,8 +44,8 @@ const Contact = () => {
               trigger: formRef.current,
               start: "top 80%",
               end: "bottom 20%",
-              toggleActions: "play none none reverse"
-            }
+              toggleActions: "play none none reverse",
+            },
           }
         );
       }
@@ -43,20 +54,53 @@ const Contact = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target as HTMLInputElement | HTMLTextAreaElement;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ✅ Web3Forms Email Sending
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setLoading(true);
+    const formPayload = {
+      access_key: VITE_EMAIL_ACCESS_KEY,
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    console.log(e)
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formPayload),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        alert("Failed to send message. Try again.");
+      }
+    } catch (error) {
+      alert("Something went wrong");
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -64,20 +108,20 @@ const Contact = () => {
       icon: Mail,
       title: "Email",
       content: "hello@flutterdev.com",
-      href: "mailto:hello@flutterdev.com"
+      href: "mailto:hello@flutterdev.com",
     },
     {
       icon: Phone,
       title: "Phone",
       content: "+1 (555) 123-4567",
-      href: "tel:+15551234567"
+      href: "tel:+15551234567",
     },
     {
       icon: MapPin,
       title: "Location",
       content: "Puducherry, India",
-      href: "#"
-    }
+      href: "#",
+    },
   ];
 
   const socialLinks = [
@@ -85,24 +129,28 @@ const Contact = () => {
       icon: Github,
       name: "GitHub",
       href: "https://github.com",
-      color: "hover:text-neutral"
+      color: "hover:text-neutral",
     },
     {
       icon: Linkedin,
       name: "LinkedIn",
       href: "https://linkedin.com",
-      color: "hover:text-blue-600"
+      color: "hover:text-blue-600",
     },
     {
       icon: Twitter,
       name: "Twitter",
       href: "https://twitter.com",
-      color: "hover:text-sky-500"
-    }
+      color: "hover:text-sky-500",
+    },
   ];
 
   return (
-    <section id="contact" ref={contactRef} className="py-16 sm:py-20 lg:py-24 bg-white">
+    <section
+      id="contact"
+      ref={contactRef}
+      className="py-16 sm:py-20 lg:py-24 bg-white"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="text-center mb-12 sm:mb-16 lg:mb-20"
@@ -116,8 +164,9 @@ const Contact = () => {
           </h2>
           <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full mb-6 sm:mb-8"></div>
           <p className="text-lg sm:text-xl text-neutral/70 max-w-3xl mx-auto leading-relaxed px-4">
-            Ready to bring your mobile app ideas to life? I'm here to help you build beautiful, 
-            scalable Flutter applications that make a real impact.
+            Ready to bring your mobile app ideas to life? I'm here to help you
+            build beautiful, scalable Flutter applications that make a real
+            impact.
           </p>
         </motion.div>
 
@@ -132,70 +181,65 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-neutral mb-3 sm:mb-4">Send Me a Message</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-neutral mb-3 sm:mb-4">
+                Send Me a Message
+              </h3>
               <p className="text-sm sm:text-base text-neutral/70">
-                Have a project in mind? I'd love to hear about it. Send me a message and I'll get back to you as soon as possible.
+                Have a project in mind? I'd love to hear about it.
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                <div className="form-control">
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Your Name"
-                    className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Your Email"
-                    className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="form-control">
                 <input
                   type="text"
-                  name="subject"
-                  value={formData.subject}
+                  name="name"
+                  value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Subject"
-                  className="input input-bordered w-full focus:input-primary text-sm sm:text-base"
+                  placeholder="Your Name"
+                  className="input input-bordered w-full focus:input-primary"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Your Email"
+                  className="input input-bordered w-full focus:input-primary"
                   required
                 />
               </div>
 
-              <div className="form-control">
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Your Message"
-                  rows={6}
-                  className="textarea textarea-bordered w-full focus:textarea-primary text-sm sm:text-base resize-none"
-                  required
-                ></textarea>
-              </div>
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleInputChange}
+                placeholder="Subject"
+                className="input input-bordered w-full focus:input-primary"
+                required
+              />
+
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                placeholder="Your Message"
+                rows={6}
+                className="textarea textarea-bordered w-full focus:textarea-primary resize-none"
+                required
+              ></textarea>
 
               <motion.button
                 type="submit"
                 className="btn btn-primary w-full sm:w-auto px-6 sm:px-8"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                disabled={loading}
               >
                 <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </motion.button>
             </form>
           </motion.div>
@@ -209,9 +253,11 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-neutral mb-3 sm:mb-4">Get in Touch</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-neutral mb-3 sm:mb-4">
+                Get in Touch
+              </h3>
               <p className="text-sm sm:text-base text-neutral/70 mb-6 sm:mb-8">
-                I'm always open to discussing new opportunities, creative projects, or just having a chat about Flutter development.
+                I'm always open to new opportunities or just a Flutter chat!
               </p>
             </div>
 
@@ -227,15 +273,19 @@ const Contact = () => {
                     <info.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-neutral font-semibold text-sm sm:text-base">{info.title}</h4>
-                    <p className="text-neutral/70 text-xs sm:text-sm">{info.content}</p>
+                    <h4 className="text-neutral font-semibold">
+                      {info.title}
+                    </h4>
+                    <p className="text-neutral/70 text-sm">{info.content}</p>
                   </div>
                 </motion.a>
               ))}
             </div>
 
             <div className="pt-6 sm:pt-8">
-              <h4 className="text-lg sm:text-xl font-semibold text-neutral mb-3 sm:mb-4">Follow Me</h4>
+              <h4 className="text-lg sm:text-xl font-semibold text-neutral mb-3 sm:mb-4">
+                Follow Me
+              </h4>
               <div className="flex space-x-3 sm:space-x-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -254,10 +304,11 @@ const Contact = () => {
             </div>
 
             <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-4 sm:p-6 mt-6 sm:mt-8">
-              <h4 className="text-base sm:text-lg font-semibold text-neutral mb-2">Quick Response</h4>
-              <p className="text-neutral/70 text-xs sm:text-sm">
-                I typically respond to messages within 24 hours. For urgent projects, 
-                please mention "URGENT" in your subject line.
+              <h4 className="text-base sm:text-lg font-semibold text-neutral mb-2">
+                Quick Response
+              </h4>
+              <p className="text-neutral/70 text-sm">
+                I usually reply within 24 hours.
               </p>
             </div>
           </motion.div>

@@ -6,9 +6,10 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI",
+      "Roboto", "Helvetica Neue", sans-serif;
   }
 }
 
@@ -16,26 +17,35 @@
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
-  
+
   .animate-pulse-slow {
     animation: pulse 3s ease-in-out infinite;
   }
 }
 
 @keyframes float {
-  0%, 100% { 
+  0%,
+  100% {
     transform: translateY(0px);
   }
-  50% { 
+  50% {
     transform: translateY(-10px);
   }
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
   }
   50% {
     opacity: 0.6;
   }
+}
+.typewriter-thin-cursor .cursor {
+  font-weight: 200px !important; /* thinner */
+}
+
+.typewriter-thin-cursor span::after {
+  font-weight: 200px !important;
 }
